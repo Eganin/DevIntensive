@@ -2,6 +2,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="size_very_small_16">16dp</dimen>
     <dimen name="size_small_24">24dp</dimen>
     <dimen name="size_medium_24">56dp</dimen>
     <dimen name="size_large_24">72dp</dimen>

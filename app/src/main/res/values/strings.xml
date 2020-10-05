@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">DevIntensive</string>
+    <string name="rating_string">Рейтинг</string>
+    <string name="line_code_text">Написано строк кода</string>
+    <string name="project_text">Проектов</string>
+    <string name="mobile_phone_text">Мобильный телефон</string>
+    <string name="mobile_number">89826574525</string>
+    <string name="email_text">Email</string>
+    <string name="email">myMail</string>
+    <string name="vk_href_text">Профиль в VK</string>
+    <string name="vk_href">vk.com/progerega</string>
+    <string name="reposity_text">Репозиторий</string>
+    <string name="repository">https://github.com/Eganin</string>
+    <string name="peron_info_text">О себе</string>
+    <string name="text_person">"Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+        deserunt mollit anim id est laborum."</string>
 </resources>

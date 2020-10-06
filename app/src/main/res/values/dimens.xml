@@ -4,7 +4,7 @@
 
     <dimen name="size_very_small_16">16dp</dimen>
     <dimen name="size_small_24">24dp</dimen>
-    <dimen name="size_medium_24">56dp</dimen>
+    <dimen name="size_medium_56">56dp</dimen>
     <dimen name="size_large_24">72dp</dimen>
 
     <dimen name="spacing_small_8">8dp</dimen>
@@ -13,7 +13,9 @@
     <dimen name="spacing_medium_32">32dp</dimen>
     <dimen name="spacing_large_56">56dp</dimen>
     <dimen name="spacing_larger_72">72dp</dimen>
+    <dimen name="spacing_big_96">96dp</dimen>
     <dimen name="size_big_72">72dp</dimen>
     <dimen name="line_size">2dp</dimen>
+    <dimen name="profile_image_size">256dp</dimen>
 
 </resources>

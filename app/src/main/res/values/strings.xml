@@ -22,4 +22,10 @@
     <string name="team_menu_text">Команда</string>
     <string name="name">Егор Захарин</string>
     <string name="test_email">egorzaharin12@gmail.com</string>
+    <string name="restart_user_photo_text">Изменить фотографию в профиле</string>
+    <string name="user_profile.dialog.gallery">Загрузить из галереи</string>
+    <string name="user_profile.dialog.camera">Сделать фото</string>
+    <string name="user_profile.dialog.cancel">Отмена</string>
+    <string name="dialog.title">Изменить фотографию пользователя</string>
+    <string name="choice_photo_from_gallery">Выберите фото</string>
 </resources>

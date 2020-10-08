@@ -1,6 +1,7 @@
 package com.example.devintensive.data.managers;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.example.devintensive.utils.ConstantManager;
 import com.example.devintensive.utils.DevIntensiveApplication;
@@ -43,5 +44,19 @@ public class PreferenceManager {
         userFields.add(sharedPreferences.getString(ConstantManager.USER_INFO_KEY, "null"));
 
         return userFields;
+    }
+
+    public void saveUserPhoto(Uri uri) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ConstantManager.USER_PHOTO_KEY, uri.toString());
+        editor.apply();
+    }
+
+    public Uri loadUserPhoto() {
+        String currentUri = sharedPreferences.getString(
+                ConstantManager.USER_PHOTO_KEY,
+                "android.resource://com.example.devintensive/drawable/user");
+
+        return Uri.parse(currentUri);
     }
 }

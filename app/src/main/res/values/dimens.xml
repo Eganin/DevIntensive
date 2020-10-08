@@ -17,5 +17,6 @@
     <dimen name="size_big_72">72dp</dimen>
     <dimen name="line_size">2dp</dimen>
     <dimen name="profile_image_size">256dp</dimen>
+    <dimen name="placeholder_photo_add">90dp</dimen>
 
 </resources>

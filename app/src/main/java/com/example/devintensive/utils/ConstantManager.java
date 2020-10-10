@@ -19,6 +19,8 @@ public interface ConstantManager {
     int CAMERA_PERMISSION_REQUEST_CODE = 333;
     int REQUEST_CALL_PHONE = 444;
 
+    String AUTH_ID = "AUTH_ID";
+    String AUTH_TOKEN = "AUTH_TOKEN";
     String USER_PHOTO_KEY = "USER_PHOTO_KEY";
     String USER_PHOTO_URI = "USER_PHOTO_URI";
 }

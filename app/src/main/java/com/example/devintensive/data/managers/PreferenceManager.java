@@ -72,4 +72,26 @@ public class PreferenceManager {
 
         return Uri.parse(uriCameraImage);
     }
+
+    public void saveAuthToken(String authToken){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ConstantManager.AUTH_TOKEN, authToken);
+        editor.apply();
+    }
+
+    public String loadAuthToken(){
+        String token = sharedPreferences.getString(ConstantManager.AUTH_TOKEN,"null");
+
+        return token;
+    }
+
+    public void saveUserId(String id){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ConstantManager.AUTH_ID, id);
+        editor.apply();
+    }
+
+    public String loadUserId(){
+        return sharedPreferences.getString(ConstantManager.AUTH_ID,"null");
+    }
 }

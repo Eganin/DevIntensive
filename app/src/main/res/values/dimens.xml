@@ -19,5 +19,6 @@
     <dimen name="line_size">2dp</dimen>
     <dimen name="profile_image_size">256dp</dimen>
     <dimen name="placeholder_photo_add">90dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

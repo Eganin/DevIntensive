@@ -5,7 +5,7 @@ public class DataManager {
     private static DataManager INSTANCE = null;
     private PreferenceManager preferenceManager;
 
-    public DataManager() {
+    private DataManager() {
         this.preferenceManager = new PreferenceManager();
     }
 
@@ -20,7 +20,5 @@ public class DataManager {
         return preferenceManager;
     }
 
-    public void setPreferenceManager(PreferenceManager preferenceManager) {
-        this.preferenceManager = preferenceManager;
-    }
+
 }

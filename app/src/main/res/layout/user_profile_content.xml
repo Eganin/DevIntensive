@@ -253,7 +253,7 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:hint="@string/vk_href_text"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:text="@string/vk_href"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
@@ -306,7 +306,7 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:hint="@string/reposity_text"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:text="@string/repository"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />
@@ -359,7 +359,7 @@
                         android:enabled="false"
                         android:focusable="false"
                         android:hint="@string/peron_info_text"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:text="@string/text_person"
                         android:textColor="@color/black"
                         android:textColorHint="@color/grey" />

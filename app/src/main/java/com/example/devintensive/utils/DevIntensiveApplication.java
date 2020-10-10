@@ -20,7 +20,4 @@ public class DevIntensiveApplication extends Application {
         return sharedPreferences;
     }
 
-    public static void setSharedPreferences(SharedPreferences sharedPreferences) {
-        DevIntensiveApplication.sharedPreferences = sharedPreferences;
-    }
 }

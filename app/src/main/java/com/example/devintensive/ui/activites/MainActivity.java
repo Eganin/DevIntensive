@@ -3,7 +3,6 @@ package com.example.devintensive.ui.activites;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
@@ -15,7 +14,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,8 +22,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -47,8 +43,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.security.Permission;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,9 +72,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private File photoFile = null;
     private Uri selectedImage = null;
 
-    public MainActivity() throws IOException {
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*
@@ -104,9 +95,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .into(userPhoto);
 
 
-        if (savedInstanceState == null) {
-
-        } else {
+        if (savedInstanceState != null) {
             currentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY, 0);
             changeEditMode(currentEditMode);
         }
@@ -526,11 +515,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.DATE_TAKEN , System.currentTimeMillis());
-        contentValues.put(MediaStore.Images.Media.MIME_TYPE , "image/jpeg");
-        contentValues.put(MediaStore.MediaColumns.DATA , image.getAbsolutePath());
+        contentValues.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        contentValues.put(MediaStore.MediaColumns.DATA, image.getAbsolutePath());
 
-        this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI , contentValues);
+        this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
 
         return image;
     }

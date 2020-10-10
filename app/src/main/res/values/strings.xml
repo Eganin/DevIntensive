@@ -28,4 +28,9 @@
     <string name="user_profile.dialog.cancel">Отмена</string>
     <string name="dialog.title">Изменить фотографию пользователя</string>
     <string name="choice_photo_from_gallery">Выберите фото</string>
+    <string name="sigin_in_text">Войти</string>
+    <string name="sign_in_email">Email</string>
+    <string name="sign_in_password">Пароль</string>
+    <string name="sign_in_text">Войти</string>
+    <string name="recycler_password_text">Забыли пароль?</string>
 </resources>

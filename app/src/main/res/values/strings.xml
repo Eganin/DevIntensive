@@ -33,4 +33,7 @@
     <string name="sign_in_password">Пароль</string>
     <string name="sign_in_text">Войти</string>
     <string name="recycler_password_text">Забыли пароль?</string>
+    <string name="permission_call_text">Для того чтобы позвонить требуется предоставить разрешения</string>
+    <string name="permission_photo_text">Для необходимой работы приложения необходимо дать требуемые разрешения</string>
+    <string name="access_permission">Разрешить</string>
 </resources>

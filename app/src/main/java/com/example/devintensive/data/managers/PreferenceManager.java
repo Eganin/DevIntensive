@@ -59,4 +59,17 @@ public class PreferenceManager {
 
         return Uri.parse(currentUri);
     }
+
+    public void saveUriCameraImage(String uriImage) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(ConstantManager.USER_PHOTO_URI, uriImage);
+        editor.apply();
+    }
+
+    public Uri loadUriCameraImage() {
+        String uriCameraImage = sharedPreferences.getString(ConstantManager.USER_PHOTO_URI,
+                "android.resource://com.example.devintensive/drawable/user");
+
+        return Uri.parse(uriCameraImage);
+    }
 }

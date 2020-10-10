@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Log;
@@ -64,12 +65,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private AppBarLayout appBarLayout;
     private AppBarLayout.LayoutParams appBarParams = null;
     private ImageView userPhoto;
+    private ImageView imageViewCallPhone;
 
     private List<EditText> userInfo;
 
     private DataManager dataManager;
 
-    private File photoFile = null;
     private Uri selectedImage = null;
 
     @Override
@@ -90,9 +91,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setupToolbar();
         setupDrawer();
         loadUserInfoValue();
+
+        File file = new File(String.valueOf(dataManager.getPreferenceManager().loadUserPhoto()));
+
         Picasso.with(MainActivity.this)
-                .load(dataManager.getPreferenceManager().loadUserPhoto())
+                .load(file)
+                .error(R.drawable.user)
+                .placeholder(R.drawable.user)
                 .into(userPhoto);
+
+        // игнорирование влияния Uri у файла который был сфоткан
+        // это нужно чтобы при запуске startActivityOnResult не было ошибки
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
 
         if (savedInstanceState != null) {
@@ -196,6 +207,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 //  идем в метод onCreateDialog
                 showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
                 break;
+
+            case R.id.callPhone:
+                System.out.println("----------------------------------------------------");
+                callPhone(getNumberPhone());
+                break;
         }
     }
 
@@ -221,8 +237,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case ConstantManager.REQUEST_CAMERA_PICTURE:
-                if (resultCode == RESULT_OK && photoFile != null) {
-                    selectedImage = Uri.fromFile(photoFile);
+                if (resultCode == RESULT_OK) {
+                    selectedImage = dataManager.getPreferenceManager().loadUriCameraImage();
                     insertProfileImage(selectedImage);
                 }
                 break;
@@ -287,9 +303,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             }
-        }
-        if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
 
+            }
+        }
+        if (requestCode == ConstantManager.REQUEST_CALL_PHONE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                callPhone(getNumberPhone());
+            }
         }
 
     }
@@ -303,6 +324,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         collapsingToolbarLayout = findViewById(R.id.collapsingToolBar);
         appBarLayout = findViewById(R.id.appBar);
         userPhoto = findViewById(R.id.userPhoto);
+        imageViewCallPhone = findViewById(R.id.callPhone);
 
         editTextUserEmail = findViewById(R.id.editTextEmail);
         editTextUserInfo = findViewById(R.id.editTextPersonInfo);
@@ -317,6 +339,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         userInfo.add(editTextUserRepository);
         userInfo.add(editTextUserVK);
 
+        imageViewCallPhone.setOnClickListener(MainActivity.this);
         profilePlaceholder.setOnClickListener(MainActivity.this);
         floatingActionButton.setOnClickListener(MainActivity.this);
     }
@@ -481,6 +504,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (photoFile != null) {
                 // добавляем данные в intent где будет хранится потом  сфотканная фотка
                 takeCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                dataManager.getPreferenceManager().saveUriCameraImage(Uri.fromFile(photoFile).toString());
                 startActivityForResult(takeCaptureIntent, ConstantManager.REQUEST_CAMERA_PICTURE);
             }
         } else {
@@ -490,16 +514,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, ConstantManager.CAMERA_PERMISSION_REQUEST_CODE);
 
-            Snackbar.make(coordinatorLayout, "Для необходимой работы приложения необходимо" +
-                    " дать требуемые разрешения ", Snackbar.LENGTH_LONG)
-                    .setAction("Разрешить", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // открываем натройки приложения
-                            openApplicationSettings();
-                        }
-                    })
-                    .show();
+            showSnackBarPermission(R.string.permission_photo_text);
         }
     }
 
@@ -527,6 +542,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void insertProfileImage(Uri selectedImage) {
         Picasso.with(MainActivity.this)
                 .load(selectedImage)
+                .placeholder(R.drawable.user)
                 .into(userPhoto);
 
         dataManager.getPreferenceManager().saveUserPhoto(selectedImage);
@@ -539,5 +555,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Uri.parse("package:" + getPackageName()));
 
         startActivityForResult(appSettingsIntent, ConstantManager.REQUEST_SETTINGS_CODE);
+    }
+
+    private String getNumberPhone() {
+        return "tel:" + editTextUserPhone.getText().toString();
+    }
+
+    private String getEmailUser() {
+        return editTextUserEmail.getText().toString();
+    }
+
+    private void callPhone(String number) {
+        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    ConstantManager.REQUEST_CALL_PHONE);
+
+            showSnackBarPermission(R.string.permission_call_text);
+            return;
+        }
+        // сразу звоним
+        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(number)));
+    }
+
+    private void showSnackBarPermission(int text) {
+        Snackbar.make(coordinatorLayout, getString(text),
+                Snackbar.LENGTH_LONG)
+                .setAction(R.string.access_permission, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // открываем натройки приложения
+                        openApplicationSettings();
+                    }
+                })
+                .show();
+    }
+
+    private void sendMessageForEmail(String emailUser) {
+
     }
 }

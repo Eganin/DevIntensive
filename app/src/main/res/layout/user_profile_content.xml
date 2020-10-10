@@ -158,7 +158,9 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/callPhone"
                 style="@style/icon.right"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_phone_in_talk_24" />
         </LinearLayout>
 
@@ -211,6 +213,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/callMessage"
                 style="@style/icon.right"
                 android:src="@drawable/ic_baseline_send_24" />
         </LinearLayout>
@@ -264,6 +267,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/openVK"
                 style="@style/icon.right"
                 android:src="@drawable/ic_baseline_remove_red_eye_24" />
         </LinearLayout>
@@ -317,6 +321,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/openGitHub"
                 style="@style/icon.right"
                 android:src="@drawable/ic_baseline_remove_red_eye_24" />
         </LinearLayout>

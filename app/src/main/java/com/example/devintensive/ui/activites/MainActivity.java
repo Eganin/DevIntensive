@@ -66,6 +66,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private AppBarLayout.LayoutParams appBarParams = null;
     private ImageView userPhoto;
     private ImageView imageViewCallPhone;
+    private ImageView imageViewSendMessage;
+    private ImageView imageViewOpenVK;
+    private ImageView imageViewOpenGitHub;
 
     private List<EditText> userInfo;
 
@@ -97,7 +100,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Picasso.with(MainActivity.this)
                 .load(file)
                 .error(R.drawable.user)
-                .placeholder(R.drawable.user)
                 .into(userPhoto);
 
         // игнорирование влияния Uri у файла который был сфоткан
@@ -209,8 +211,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.callPhone:
-                System.out.println("----------------------------------------------------");
                 callPhone(getNumberPhone());
+                break;
+
+            case R.id.sendMessage:
+                sendMessageForEmail(getEmailUser());
+                break;
+
+            case R.id.openGitHub:
+                openBrowser(getHrefGitHub());
+                break;
+
+            case R.id.openVK:
+                openBrowser(getIdVK());
                 break;
         }
     }
@@ -325,6 +338,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         appBarLayout = findViewById(R.id.appBar);
         userPhoto = findViewById(R.id.userPhoto);
         imageViewCallPhone = findViewById(R.id.callPhone);
+        imageViewSendMessage = findViewById(R.id.sendMessage);
+        imageViewOpenVK = findViewById(R.id.openVK);
+        imageViewOpenGitHub = findViewById(R.id.openGitHub);
 
         editTextUserEmail = findViewById(R.id.editTextEmail);
         editTextUserInfo = findViewById(R.id.editTextPersonInfo);
@@ -339,6 +355,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         userInfo.add(editTextUserRepository);
         userInfo.add(editTextUserVK);
 
+        imageViewOpenGitHub.setOnClickListener(MainActivity.this);
+        imageViewOpenVK.setOnClickListener(MainActivity.this);
+        imageViewSendMessage.setOnClickListener(MainActivity.this);
         imageViewCallPhone.setOnClickListener(MainActivity.this);
         profilePlaceholder.setOnClickListener(MainActivity.this);
         floatingActionButton.setOnClickListener(MainActivity.this);
@@ -542,7 +561,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void insertProfileImage(Uri selectedImage) {
         Picasso.with(MainActivity.this)
                 .load(selectedImage)
-                .placeholder(R.drawable.user)
                 .into(userPhoto);
 
         dataManager.getPreferenceManager().saveUserPhoto(selectedImage);
@@ -561,8 +579,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return "tel:" + editTextUserPhone.getText().toString();
     }
 
-    private String getEmailUser() {
-        return editTextUserEmail.getText().toString();
+    private String[] getEmailUser() {
+        return new String[]{editTextUserEmail.getText().toString()};
     }
 
     private void callPhone(String number) {
@@ -592,7 +610,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 .show();
     }
 
-    private void sendMessageForEmail(String emailUser) {
+    private void sendMessageForEmail(String[] emailUser) {
+        if (emailUser[0].length() > 0) {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:")); // отпарвляем только на почту
+            intent.putExtra(Intent.EXTRA_EMAIL, emailUser);
+            intent.putExtra(Intent.EXTRA_SUBJECT, emailUser);
+            // преобразовываем StringBuffer в String для отправки сообщения
+            intent.putExtra(Intent.EXTRA_TEXT, "");// текст письма
+            // убеждаемся что на телефоне есть приложение способное отправить и принять сообщение
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
+    }
+    private String getIdVK(){
+        return "https://vk.com/"+ editTextUserVK.getText().toString();
+    }
+
+    private String getHrefGitHub(){
+        return editTextUserRepository.getText().toString();
+    }
+
+    private void openBrowser(String href){
+        Uri address = Uri.parse(href);
+        Intent openlink = new Intent(Intent.ACTION_VIEW, address);
+        startActivity(Intent.createChooser(openlink, "Browser"));
 
     }
+
 }

@@ -213,8 +213,9 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/callMessage"
+                android:id="@+id/sendMessage"
                 style="@style/icon.right"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_send_24" />
         </LinearLayout>
 
